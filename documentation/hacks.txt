@@ -1,0 +1,5 @@
+******To invoke lambda within a lambda******
+Use the lambda_basic_execution role that has the AWSlambdaRole. Refer to the policy in IAM.
+Use the https://www.youtube.com/watch?v=5QwrseYLwNM for steps.
+
+

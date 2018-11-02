@@ -51,12 +51,8 @@ function parseServerResponse(response){
   if (msg_list === undefined) {
     text = "Sorry I dont have an answer right now!"
     return text;
-  }
-  
-  max = msg_list.length - 1
-  min = 0;
-  rand = generateRandomInteger(min,max)
-  text = msg_list[rand]
+  } 
+  text = msg_list
   return text;
   
 }

@@ -67,11 +67,12 @@ function buildChatMessage(text,date){
     };
 
     var messages = [];
-
+    var sessionAttributes = {};
     messages.push(message)
 
     var requestBody = {
-        messages:messages
+        messages:messages,
+        sessionAttributes:sessionAttributes
     };
 
     console.log(JSON.stringify(requestBody));
