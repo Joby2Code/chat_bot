@@ -1,16 +1,16 @@
 
-var apigClient = apigClientFactory.newClient();
+//var apigClient = apigClientFactory.newClient({});
 
-var apigClient = apigClientFactory.newClient({
+/*var apigClient = apigClientFactory.newClient({
   accessKey: 'AKIAZT452VYZRYJWKQRC',
   secretKey: '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',
-});
+});*/
 
 var API_KEY = 'oXljzw5a4X2KK3iWFWjkX1ASYmUrBx1kaDil0oCw';
 
-var apigClient = apigClientFactory.newClient({
+/*var apigClient = apigClientFactory.newClient({
   apiKey: API_KEY
-});
+});*/
 
 
 
@@ -34,6 +34,7 @@ var additionalParams = {
 
 
 function postRequest(body) {
+  var apigClient = apigClientFactory.newClient({});
   apigClient.chatbotPost(params, body, additionalParams)
     .then(function(result){
       text = parseServerResponse(result);

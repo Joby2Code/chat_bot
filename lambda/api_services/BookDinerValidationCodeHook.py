@@ -13,6 +13,7 @@ logger.setLevel(logging.DEBUG)
 # --Helper Functions to build response
 
 def elicit_slot(session_attributes, intent_name, slots, slot_to_elicit, message):
+    
     return {
         'sessionAttributes': session_attributes,
         'dialogAction': {
@@ -48,6 +49,7 @@ def close(session_attributes, fulfillment_state, message):
     return response
 
 
+
 # --Helper Functions
 def try_ex(func):
     try:
@@ -69,8 +71,7 @@ def isvalid_text(text):
         return False
     else:
         return True
-
-
+        
 def isvalid_city(city):
     valid_cities = ['new york', 'los angeles', 'chicago', 'houston', 'philadelphia', 'phoenix', 'san antonio',
                     'san diego', 'dallas', 'san jose', 'austin', 'jacksonville', 'san francisco', 'indianapolis',
@@ -86,12 +87,11 @@ def isvalid_date(date):
         return True
     except ValueError:
         return False
-
-
+        
 def isvalid_cuisine(cuisine):
     cuisine_types = ['asian', 'thai', 'american', 'mexican', 'chinese', 'indian']
     return cuisine.lower() in cuisine_types
-
+    
 
 # --def validateGreetings
 
@@ -107,19 +107,18 @@ def validateGreetings(slots):
                 False,
                 'Name',
                 'Name {} has invalid characters, Please try again!'.format(name)
-            )
+                )
         else:
             logger.debug('Name {} is valid'.format(name))
             return {'isValid': True}
-
+    
     else:
         logger.debug('name {} input is invalid'.format(name))
         return build_validation_result(
-            False,
-            'Name',
-            'Greetings, May I know your first name please.?'
-        )
-
+                False,
+                'Name',
+                'Greetings, May I know your first name please.?'
+                )
 
 def validateThankYouIntent(slots):
     pass
@@ -134,57 +133,59 @@ def validateDinningSuggestionsIntent(slots):
     cuisine = try_ex(lambda: slots['Cuisine'])
     time = try_ex(lambda: slots['Time'])
     number = try_ex(lambda: slots['Number'])
-
-    print('Location in validateDinningSuggestionsIntent', location)
-
+    
+    print('Location in validateDinningSuggestionsIntent',location)
+    
     if not location:
         return build_validation_result(
             False,
             'Location',
             'Where would you like to dine?'
         )
-
+    
     if not isvalid_city(location):
         return build_validation_result(
             False,
             'Location',
             'We currently do not support the city {}, Please try with a different city'.format(location)
         )
-
-    print('Validating Date', date)
-
+    
+    print ('Validating Date', date)
+    
     if date:
         if not isvalid_date(date):
             return build_validation_result(
                 False,
                 'Date',
                 '{} date is invalid, Please enter the date in mm/dd/yyyy format.'.format(date)
-            )
-
+                )
+        
     if not date:
         return build_validation_result(
             False,
             'Date',
             'When would you like to book the table? Enter the date in mm/dd/yyyy format.'
         )
-
+    
+    
+    
     if not cuisine:
         return build_validation_result(
             False,
             'Cuisine',
             'What cuisine do you prefer?'
         )
-
+    
     if not isvalid_cuisine(cuisine):
         return build_validation_result(
             False,
             'Cuisine',
             'We currently do not support the suisine {}, Please try a different option'.format(location)
         )
-    # Apply validations for number, time change the slot type to address
+    #Apply validations for number, time change the slot type to address    
     return {'isValid': True}
-
-
+ 
+    
 # ---Intents---
 
 def dispatch(intent_request):
@@ -212,6 +213,7 @@ def dispatch(intent_request):
         elif (intent_name == 'DiningSuggestionsIntent'):
             logger.debug('Validating slots for DiningSuggestionsIntent....')
             validation_result = validateDinningSuggestionsIntent(intent_request['currentIntent']['slots'])
+            
 
         if not validation_result['isValid']:
             slots = intent_request['currentIntent']['slots']
@@ -228,11 +230,10 @@ def dispatch(intent_request):
             return delegate(
                 session_attributes,
                 intent_request['currentIntent']['slots']
-            )
+                )
     else:
         pass
-
-
+    
 # Main Halder for validations
 def lambda_handler(event, context):
     """
@@ -246,3 +247,4 @@ def lambda_handler(event, context):
 
     return dispatch(event)
 
+    
